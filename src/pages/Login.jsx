@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Typography, TextField, Button, Box, Link } from '@mui/material';
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Link,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 
 const Login = () => {
   const { type } = useParams();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [form, setForm] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: '', password: '' });
@@ -49,8 +60,16 @@ const Login = () => {
 
   return (
     <Container maxWidth="xs">
-      <Box mt={8} component="form" onSubmit={handleSubmit}>
-        <Typography variant="h5" align="center" gutterBottom>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        mt={isMobile ? 6 : 10}
+        p={isMobile ? 2 : 4}
+        boxShadow={isMobile ? 0 : 3}
+        borderRadius={2}
+        bgcolor={isMobile ? 'transparent' : 'background.paper'}
+      >
+        <Typography variant="h5" align="center" fontWeight="bold" gutterBottom>
           {type === 'developer' ? 'Developer Login' : 'User Login'}
         </Typography>
 
@@ -58,8 +77,8 @@ const Login = () => {
           fullWidth
           margin="normal"
           label="Email"
-          variant="outlined"
           name="email"
+          variant="outlined"
           value={form.email}
           onChange={handleChange}
           error={!!errors.email}
@@ -71,8 +90,8 @@ const Login = () => {
           margin="normal"
           label="Password"
           type="password"
-          variant="outlined"
           name="password"
+          variant="outlined"
           value={form.password}
           onChange={handleChange}
           error={!!errors.password}
@@ -83,13 +102,20 @@ const Login = () => {
           <Link
             component="button"
             variant="body2"
+            underline="hover"
             onClick={() => navigate('/forgot-password')}
           >
             Forgot password?
           </Link>
         </Box>
 
-        <Button fullWidth type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+        <Button
+          fullWidth
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{ mt: 3, py: 1.3 }}
+        >
           Login
         </Button>
 
@@ -99,6 +125,7 @@ const Login = () => {
           startIcon={<GoogleIcon />}
           sx={{
             mt: 2,
+            py: 1.3,
             borderColor: '#ccc',
             color: '#555',
             textTransform: 'none',
@@ -111,7 +138,11 @@ const Login = () => {
           Continue with Google
         </Button>
 
-        <Button fullWidth sx={{ mt: 2 }} onClick={() => navigate(`/signup/${type}`)}>
+        <Button
+          fullWidth
+          sx={{ mt: 2, py: 1.3 }}
+          onClick={() => navigate(`/signup/${type}`)}
+        >
           Don't have an account? Sign up
         </Button>
       </Box>

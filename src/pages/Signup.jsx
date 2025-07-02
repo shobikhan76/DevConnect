@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Typography, TextField, Button, Box } from '@mui/material';
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 
 const Signup = () => {
   const { type } = useParams();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [form, setForm] = useState({
     fullName: '',
@@ -69,14 +79,22 @@ const Signup = () => {
     e.preventDefault();
     if (validate()) {
       console.log('Form submitted:', form);
-      // API call or logic here
+      // Add signup API logic here
     }
   };
 
   return (
     <Container maxWidth="xs">
-      <Box mt={8} component="form" onSubmit={handleSubmit}>
-        <Typography variant="h5" align="center" gutterBottom>
+      <Box
+        mt={isMobile ? 6 : 10}
+        p={isMobile ? 2 : 4}
+        borderRadius={2}
+        boxShadow={isMobile ? 0 : 3}
+        bgcolor={isMobile ? 'transparent' : 'background.paper'}
+        component="form"
+        onSubmit={handleSubmit}
+      >
+        <Typography variant="h5" align="center" fontWeight="bold" gutterBottom>
           {type === 'developer' ? 'Developer Signup' : 'User Signup'}
         </Typography>
 
@@ -85,7 +103,6 @@ const Signup = () => {
           margin="normal"
           label="Full Name"
           name="fullName"
-          variant="outlined"
           value={form.fullName}
           onChange={handleChange}
           error={!!errors.fullName}
@@ -97,7 +114,6 @@ const Signup = () => {
           margin="normal"
           label="Email"
           name="email"
-          variant="outlined"
           value={form.email}
           onChange={handleChange}
           error={!!errors.email}
@@ -108,9 +124,8 @@ const Signup = () => {
           fullWidth
           margin="normal"
           label="Password"
-          name="password"
           type="password"
-          variant="outlined"
+          name="password"
           value={form.password}
           onChange={handleChange}
           error={!!errors.password}
@@ -124,7 +139,6 @@ const Signup = () => {
               margin="normal"
               label="Tech Stack"
               name="techStack"
-              variant="outlined"
               value={form.techStack}
               onChange={handleChange}
               error={!!errors.techStack}
@@ -136,7 +150,6 @@ const Signup = () => {
               margin="normal"
               label="GitHub/LinkedIn URL"
               name="portfolio"
-              variant="outlined"
               value={form.portfolio}
               onChange={handleChange}
               error={!!errors.portfolio}
@@ -150,18 +163,18 @@ const Signup = () => {
           fullWidth
           variant="contained"
           color="primary"
-          sx={{ mt: 2 }}
+          sx={{ mt: 3, py: 1.3 }}
         >
           Sign Up
         </Button>
 
-        {/* Google login button placeholder */}
         <Button
           fullWidth
           variant="outlined"
           startIcon={<GoogleIcon />}
           sx={{
             mt: 2,
+            py: 1.3,
             borderColor: '#ccc',
             color: '#555',
             textTransform: 'none',
