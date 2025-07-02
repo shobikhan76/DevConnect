@@ -75,25 +75,37 @@ const Landing = () => {
             DevConnect
           </Typography>
 
-          <Typography variant="subtitle1" gutterBottom color="text.secondary">
+          <Typography variant="subtitle1" gutterBottom fontWeight="bold">
             Connect with Developers or Users
           </Typography>
 
           <Stack direction="row" spacing={1} sx={{ mt: 4, width: '100%' }}>
-            <TextField
-              variant="outlined"
-              placeholder="Search for developers or users"
-              fullWidth
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
+           <TextField
+  color='primary'
+  variant="outlined"
+  placeholder="Search for developers or users"
+  fullWidth
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  InputProps={{
+    startAdornment: (
+      <InputAdornment position="start">
+        <SearchIcon color="action" />
+      </InputAdornment>
+    ),
+    style: {
+      color: theme.palette.text.primary,        // input text color
+      backgroundColor: theme.palette.background.paper,  // background of input
+    }
+  }}
+  sx={{
+    '& .MuiInputBase-input::placeholder': {
+      color: theme.palette.text.secondary,     // placeholder color (lighter/dimmed)
+      opacity: 1,
+    },
+  }}
+/>
+
             <Button
               variant="contained"
               color="primary"
